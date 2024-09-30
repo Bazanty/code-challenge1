@@ -38,6 +38,8 @@ Javascript
 ## Support and contact details
 
 github.com/bazanty
+## Author 
+Brian Nyakundi
 
 ### License
 
