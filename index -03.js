@@ -1,5 +1,9 @@
-function calculatePayee($salaryAmount, $nssfAmount){
-    $tax = 0;
+let basicSalary = parseInt(prompt("Basic Salary: "));
+let benefits = parseInt(prompt("Benefits: "));
+
+function calculatePayee($salaryAmount, $nssfAmount) {
+    
+tax = 0;
     $remaining = $salaryAmount - $nssfAmount;
 
 if($remaining > 24000){
@@ -29,10 +33,11 @@ if($remaining > 24000){
         $remaining = 0;
     }
 }
-return $tax;
+alert($tax);
 }
 
  // Calculate NHIF deductions
+ const nhif =prompt('nhif')
  function NHIF(){
     let nhif;
     if(grossSalary <= 5999){
@@ -70,15 +75,40 @@ return $tax;
     }else{
         nhif = 1700;
     }
-    return nhif;
+    alert (nhif);
 }
   // Calculate NSSF deductions
-function NSSF(){
-    let nssf = 0.06 * grossSalary;
-    return nssf;
-}
+  function calculateNSSF(grossSalary) {
+    let nssfContribution = 0;
+    
+    // Tier I: Up to KES 7,000
+    if (grossSalary <= 7000) {
+      nssfContribution = grossSalary * 0.06;  // 6% of gross salary
+    } else {
+      // Contributions for Tier I capped at 7,000
+      nssfContribution = 7000 * 0.06;  // 6% of the first 7,000
+  
+      // Tier II: From KES 7,001 to KES 36,000 
+      if (grossSalary > 7000 && grossSalary <= 36000) {
+        nssfContribution += (grossSalary - 7000) * 0.06;  // 6% on the remainder up to 36,000
+      } else if (grossSalary > 36000) {
+        // Contributions for Tier II capped at 36,000
+        nssfContribution += (36000 - 7000) * 0.06;  
+      }
+    }
+  
+    alert(nssfContribution);
+  }  
+  
 
-let PaYee = payee(), NhIf = NHIF(), NsSf = NSSF();
+
+
+
+let payee = payee(), NhIf = NHIF(), NSSf = NSSF();
   // Calculate net salary
-let netSalary = grossSalary - (PaYee + NhIf + NsSf);
-console.log(netSalary)
+let netSalary = grossSalary - (payee + NhIf + NSSf);
+alert(netSalary)
+
+alert(`Net Salary: ${netSalary.toFixed(2)}`);
+
+
