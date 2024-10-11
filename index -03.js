@@ -1,114 +1,110 @@
-let basicSalary = parseInt(prompt("Basic Salary: "));
-let benefits = parseInt(prompt("Benefits: "));
+let basicSalary = parseInt(prompt("Enter Basic Salary: "));
+let benefits = parseInt(prompt("Enter Benefits: "));
+let grossSalary = basicSalary + benefits;
 
-function calculatePayee($salaryAmount, $nssfAmount) {
+function Payee(salaryAmount, nssfAmount) {
+    let tax = 0;
+    let remaining = salaryAmount - nssfAmount;
+
+    if (remaining > 24000) {
+        tax += 24000 * (10 / 100);
+        remaining -= 24000;
+
+        if (remaining > 0) {
+            let amountToTax = (remaining < 8333) ? remaining : 8333;
+            tax += amountToTax * (25 / 100);
+            remaining -= amountToTax;
+        }
+
+        if (remaining > 0) {
+            let amountToTax = (remaining < 467667) ? remaining : 467667;
+            tax += amountToTax * (30 / 100);
+            remaining -= amountToTax;
+        }
+
+        if (remaining > 0) {
+            let amountToTax = (remaining < 300000) ? remaining : 300000;
+            tax += amountToTax * (32.5 / 100);
+            remaining -= amountToTax;
+        }
+
+        if (remaining > 0) {
+            tax += remaining * (35 / 100);
+            remaining = 0;
+        }
+    }
     
-tax = 0;
-    $remaining = $salaryAmount - $nssfAmount;
-
-if($remaining > 24000){
-    $tax += 24000*(10/100);
-    $remaining -=24000;
-
-    if($remaining > 0){
-        $amountToTax = ($remaining < 8333) ? $remaining : 8333;
-        $tax += $amountToTax * (25/100);
-        $remaining -= $amountToTax;
-    }
-
-    if($remaining > 0){
-        $amountToTax = ($remaining < 467667)? $remaining : 467667;
-        $tax += $amountToTax * (30/100);
-        $remaining -= $amountToTax;
-    }
-    
-    if($remaining > 0){
-        $amountToTax = ($remaining < 300000) ? $remaining : 300000;
-        $tax += $amountToTax * (32.5/100);
-        $remaining -= $amountToTax;
-    }
-
-    if($remaining > 0){
-        $tax += $remaining * (35/100);
-        $remaining = 0;
-    }
-}
-alert($tax);
+    return tax;
 }
 
- // Calculate NHIF deductions
- const nhif =prompt('nhif')
- function NHIF(){
+// Calculate NHIF deductions
+function NHIF(grossSalary) {
     let nhif;
-    if(grossSalary <= 5999){
+    if (grossSalary <= 5999) {
         nhif = 150;
-    }else if(grossSalary >= 6000 && grossSalary <= 7999){
+    } else if (grossSalary <= 7999) {
         nhif = 300;
-    }else if(grossSalary >= 8000 && grossSalary <= 11999){
+    } else if (grossSalary <= 11999) {
         nhif = 400;
-    }else if(grossSalary >= 12000 && grossSalary <= 14999){
+    } else if (grossSalary <= 14999) {
         nhif = 500;
-    }else if(grossSalary >= 15000 && grossSalary <= 19999){
+    } else if (grossSalary <= 19999) {
         nhif = 600;
-    }else if(grossSalary >= 20000 && grossSalary <= 24999){
+    } else if (grossSalary <= 24999) {
         nhif = 750;
-    }else if(grossSalary >=25000 && grossSalary <= 29999){
+    } else if (grossSalary <= 29999) {
         nhif = 850;
-    }else if(grossSalary >= 30000 && grossSalary <= 34999){
+    } else if (grossSalary <= 34999) {
         nhif = 900;
-    }else if(grossSalary >= 35000 && grossSalary <= 39999){
+    } else if (grossSalary <= 39999) {
         nhif = 950;
-    }else if(grossSalary >= 40000 && grossSalary <= 44999){
+    } else if (grossSalary <= 44999) {
         nhif = 1000;
-    }else if(grossSalary >= 45000 && grossSalary <= 49999){
+    } else if (grossSalary <= 49999) {
         nhif = 1100;
-    }else if(grossSalary >= 50000 && grossSalary <= 59999){
+    } else if (grossSalary <= 59999) {
         nhif = 1200;
-    }else if(grossSalary >= 60000 && grossSalary <= 69999){
+    } else if (grossSalary <= 69999) {
         nhif = 1300;
-    }else if(grossSalary >= 70000 && grossSalary <= 79999){
+    } else if (grossSalary <= 79999) {
         nhif = 1400;
-    }else if(grossSalary >= 80000 && grossSalary <= 89999){
+    } else if (grossSalary <= 89999) {
         nhif = 1500;
-    }else if(grossSalary >= 90000 && grossSalary <= 99999){
+    } else if (grossSalary <= 99999) {
         nhif = 1600;
-    }else{
+    } else {
         nhif = 1700;
     }
-    alert (nhif);
+    return nhif;
 }
-  // Calculate NSSF deductions
-  function calculateNSSF(grossSalary) {
+
+// Calculate NSSF deductions
+function NSSF(grossSalary) {
     let nssfContribution = 0;
-    
-    // Tier I: Up to KES 7,000
+
     if (grossSalary <= 7000) {
-      nssfContribution = grossSalary * 0.06;  // 6% of gross salary
+        nssfContribution = grossSalary * 0.06;  
     } else {
-      // Contributions for Tier I capped at 7,000
-      nssfContribution = 7000 * 0.06;  // 6% of the first 7,000
-  
-      // Tier II: From KES 7,001 to KES 36,000 
-      if (grossSalary > 7000 && grossSalary <= 36000) {
-        nssfContribution += (grossSalary - 7000) * 0.06;  // 6% on the remainder up to 36,000
-      } else if (grossSalary > 36000) {
-        // Contributions for Tier II capped at 36,000
-        nssfContribution += (36000 - 7000) * 0.06;  
-      }
+        
+        nssfContribution = 7000 * 0.06;  
+        
+        if (grossSalary > 7000 && grossSalary <= 36000) {
+            nssfContribution += (grossSalary - 7000) * 0.06;  
+        } else if (grossSalary > 36000) {
+            nssfContribution += (36000 - 7000) * 0.06;
+        }
     }
-  
-    alert(nssfContribution);
-  }  
-  
 
+    return nssfContribution;
+}
 
+// Calculate deductions and net salary
+let nssf = NSSF(grossSalary);
+let payee =Payee(grossSalary, nssf);
+let nhif = NHIF(grossSalary);
 
+// Calculate net salary
+let netSalary = grossSalary - (payee + nhif + nssf);
 
-let payee = payee(), NhIf = NHIF(), NSSf = NSSF();
-  // Calculate net salary
-let netSalary = grossSalary - (payee + NhIf + NSSf);
-alert(netSalary)
-
+// Output the results
 alert(`Net Salary: ${netSalary.toFixed(2)}`);
-
-
